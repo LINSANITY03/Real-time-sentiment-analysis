@@ -70,7 +70,7 @@ texts = ["""I recently stayed at a hotel that was highly disappointing.
          The room was dirty, and the staff were unhelpful and rude.
          Despite requesting multiple times, the issues were never addressed.
          The amenities were outdated, and the overall experience was far below what I expected.
-         I would not recommend this place to anyone and will avoid it in the future"""]
+         I would not recommend this place to anyone and will avoid it in the future."""]
 
 # Create a TensorFlow dataset from the list of texts
 dataset = tf.data.Dataset.from_tensor_slices(texts)

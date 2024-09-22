@@ -1,3 +1,6 @@
 venv
 saved-model
 .env
+__pycache__
+practice.py
+.pytest_cache
