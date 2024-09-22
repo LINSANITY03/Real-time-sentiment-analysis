@@ -1,6 +1,4 @@
-[![Python 3.10](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-3100/)
-
-[![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![Python 3.10](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-3100/) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
 # Real-time-sentiment-analysis
 
@@ -25,4 +23,14 @@ Here is an overview of the project structure:
     ------- # other files
     ├── README.md
     ├── requirements.txt
+```
+
+## Installation
+
+Create a virutalenv and install the required libraries from requirements.txt
+
+```
+    virutalenv venv
+    venv\Scripts\activate
+    pip install -r requirements.txt
 ```
