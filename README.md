@@ -1,4 +1,4 @@
-[![Python 3.10](https://img.shields.io/badge/python-3.6-blue.svg)](https://www.python.org/downloads/release/python-3100/) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
 
 # Real-time-sentiment-analysis
 
