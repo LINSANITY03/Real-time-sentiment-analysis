@@ -1,1 +1,2 @@
 nlp-models/saved-models/sent-model filter=lfs diff=lfs merge=lfs -text
+nlp-models/saved-model/sent-model filter=lfs diff=lfs merge=lfs -text
