@@ -28,11 +28,13 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-       # Create the 'app' directory and move all files into it
+          
+       # Move all files EXCEPT the 'app' folder into the 'app' directory
       - name: Move files to 'app' folder
         run: |
-          mkdir app
-          mv * app/
+          shopt -s extglob
+          mkdir -p app
+          mv !(app|.github) app/   # Move everything except 'app' and '.github'
       - name: Set PYTHONPATH
         run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)/app" >> $GITHUB_ENV
       - name: Run tests
