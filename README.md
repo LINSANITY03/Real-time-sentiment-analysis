@@ -1,4 +1,5 @@
-[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint)
+[![Python 3.10](https://img.shields.io/badge/python-3.10-blue.svg)](https://www.python.org/downloads/release/python-3100/) [![linting: pylint](https://img.shields.io/badge/linting-pylint-yellowgreen)](https://github.com/pylint-dev/pylint) [![Static Badge](https://img.shields.io/badge/Tests)
+](https://github.com/LINSANITY03/Real-time-sentiment-analysis/actions/workflows/python-app.yml/badge.svg)
 
 # Real-time-sentiment-analysis
 
@@ -17,6 +18,7 @@ Here is an overview of the project structure:
     ├── nlp-models
         ├── notebook
         ├── saved-model # ignored
+            ├── sent-model
         ├── src
     ├── routers
     ├── tests
