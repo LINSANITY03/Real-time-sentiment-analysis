@@ -1,6 +1,10 @@
 venv
-saved-model
 .env
 __pycache__
 practice.py
 .pytest_cache
+# Ignore the whole directory
+nlp-models/saved-model/
+
+# But do not ignore the sent-model file
+!nlp-models/saved-model/sent-model
