@@ -32,7 +32,7 @@ import pytest
 
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
-from ...routers import predict
+from app.routers import predict
 
 # Create a test FastAPI app
 app = FastAPI()
