@@ -14,9 +14,7 @@ Key Features:
 
 import tensorflow_hub as hub
 import tensorflow_text as text  # pylint: disable=unused-import
-import tensorflow._api.v2.compat.v1 as tf
-
-tf.disable_v2_behavior() # pylint: disable=no-member
+import tensorflow as tf
 
 PRE_PROCESS_URL= "https://tfhub.dev/tensorflow/bert_en_uncased_preprocess/3"
 ENCODER_URL = "https://tfhub.dev/tensorflow/bert_en_uncased_L-12_H-768_A-12/4"
@@ -76,15 +74,9 @@ texts = ["""I recently stayed at a hotel that was highly disappointing.
 dataset = tf.data.Dataset.from_tensor_slices(texts)
 dataset = dataset.batch(1)  # Adjust the batch size as needed
 
+# Perform prediction using the dataset
+# Specify steps based on the number of texts
+predictions = model.predict(dataset, steps=len(texts))
 
-with tf.compat.v1.Session() as sess:
-    # Use tf.compat.v1.global_variables_initializer()
-    sess.run(tf.compat.v1.global_variables_initializer())
-    sess.run(tf.compat.v1.tables_initializer())
-
-    # Perform prediction using the dataset
-    # Specify steps based on the number of texts
-    predictions = model.predict(dataset, steps=len(texts))
-
-    # Print the predictions
-    print(predictions)
+# Print the predictions
+print(predictions)

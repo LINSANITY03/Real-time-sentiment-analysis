@@ -22,12 +22,10 @@ Example Usage:
 
 from typing import List
 
-import tensorflow._api.v2.compat.v1 as tf
+import tensorflow as tf
 
 from fastapi import APIRouter, Request, status, HTTPException
 from pydantic import BaseModel
-
-tf.disable_v2_behavior() # pylint: disable=no-member
 
 router = APIRouter(
     prefix="",
@@ -73,17 +71,13 @@ def prediction(dataset, sent_model, text_len):
         predictions.item(): Prediction score
 
     """
-    with tf.compat.v1.Session() as sess:
-        # Use tf.compat.v1.global_variables_initializer()
-        sess.run(tf.compat.v1.global_variables_initializer())
-        sess.run(tf.compat.v1.tables_initializer())
 
-        # Perform prediction using the dataset
-        # Specify steps based on the number of texts
-        predictions = sent_model.predict(dataset, steps=text_len)
+    # Perform prediction using the dataset
+    # Specify steps based on the number of texts
+    predictions = sent_model.predict(dataset, steps=text_len)
 
-        # Return the prediction score
-        return predictions.item()
+    # Return the prediction score
+    return predictions.item()
 
 @router.post("/", status_code=status.HTTP_200_OK)
 async def predict_sentiment(request:Request, data: TextStr):

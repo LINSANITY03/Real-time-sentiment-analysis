@@ -18,14 +18,12 @@ Run the application using the command:
 from contextlib import asynccontextmanager
 
 import tensorflow_hub as hub
-import tensorflow._api.v2.compat.v1 as tf
+import tensorflow as tf
 import tensorflow_text as text  # pylint: disable=unused-import
 
 from fastapi import FastAPI
 
 from .routers import predict
-
-tf.disable_v2_behavior() # pylint: disable=no-member
 
 @asynccontextmanager
 async def lifespan(apps: FastAPI):
@@ -34,7 +32,7 @@ async def lifespan(apps: FastAPI):
     starts taking requests, during the startup.
     """
     # Load the ML model
-    ml_models = tf.keras.models.load_model("nlp-models/saved-model/sent-model",
+    ml_models = tf.keras.models.load_model("nlp-models/saved-model/sent-model1.h5",
                                             custom_objects={'KerasLayer': hub.KerasLayer},
                                             )
 
