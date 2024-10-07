@@ -22,6 +22,7 @@ Example Usage:
 
 from typing import List
 
+from fastapi.responses import JSONResponse
 import tensorflow as tf
 
 from fastapi import APIRouter, Request, status, HTTPException
@@ -41,6 +42,15 @@ class TextStr(BaseModel):
         texts (str): The input text for sentiment analysis.
     """
     texts: str
+
+class PredictResponse(BaseModel):
+    """
+    A Pydantic Model representing the output response for sentiment prediction.
+    
+    Attributes:
+        score (str): Prediction score for sentiment analysis.
+    """
+    score: str
 
 def pre_process_text(input_text: List[str]):
     """
@@ -79,7 +89,7 @@ def prediction(dataset, sent_model, text_len):
     # Return the prediction score
     return predictions.item()
 
-@router.post("/", status_code=status.HTTP_200_OK)
+@router.post("/", status_code=status.HTTP_200_OK, response_model=PredictResponse)
 async def predict_sentiment(request:Request, data: TextStr):
     """
     Predict the sentiment of the input text using a pre-loaded machine learning model.
@@ -111,4 +121,5 @@ async def predict_sentiment(request:Request, data: TextStr):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
     predictions = prediction(processed_text, ml_models, len(data.texts))
-    return {"score": predictions}
+    content = {"score": predictions}
+    return JSONResponse(content=content)
