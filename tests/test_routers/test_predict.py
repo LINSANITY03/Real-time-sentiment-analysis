@@ -144,3 +144,31 @@ def test_predict_sentiment_model_not_loaded(client):
     # Check the error response
     assert response.status_code == 500
     assert response.json() == {"detail": "Model not loaded properly"}
+
+def test_rate_limiting(client):
+    """
+    Test that the /predict route is limited to 2 requests per minute.
+    The 3rd request should return a 429 Too Many Requests error.
+
+    Parameters:
+        client (TestClient): The test client instance used to make requests 
+                                    to the FastAPI application.
+
+    Assertions:
+        - Asserts that the response status code is 200 for the first 2 request.
+        - Asserts that the response JSON gives the expected error message 
+          {"detail": "Rate limit exceeded"}.
+    """
+    test_data = {"texts": "I recently stayed at a hotel that was highly disappointing. The room was dirty, and the staff were unhelpful and rude."}
+    
+
+    # Make 2 successful requests within the rate limit
+    for _ in range(2):
+        response = client.post("/", json=test_data)
+        assert response.status_code == 200, "Expected status code 200 for valid requests"
+    
+    # The 3rd request should hit the rate limit and return status 429
+    response = client.post("/", json=test_data)
+    assert response.status_code == 429, "Expected status code 429 after rate limit exceeded"
+    assert response.json() == {'detail': '2 per 1 hour'}, \
+        "Expected rate limit exceeded error message"

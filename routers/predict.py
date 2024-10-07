@@ -24,6 +24,7 @@ from typing import List
 
 from fastapi.responses import JSONResponse
 import tensorflow as tf
+from app.dependencies import limiter
 
 from fastapi import APIRouter, Request, status, HTTPException
 from pydantic import BaseModel
@@ -90,6 +91,7 @@ def prediction(dataset, sent_model, text_len):
     return predictions.item()
 
 @router.post("/", status_code=status.HTTP_200_OK, response_model=PredictResponse)
+@limiter.limit("2/hour")  # Limit to 2 requests per minute
 async def predict_sentiment(request:Request, data: TextStr):
     """
     Predict the sentiment of the input text using a pre-loaded machine learning model.
@@ -98,6 +100,9 @@ async def predict_sentiment(request:Request, data: TextStr):
     sentiment analysis model to predict the sentiment scores. If the model is not 
     properly loaded or an error occurs during preprocessing, an HTTP 500 error is raised.
 
+    This endpoint is rate-limited to 2 requests per minute.
+    If you exceed this limit, you will receive a 429 status code.
+    
     Args:
         request (Request): The FastAPI request object, used to access the app state which 
                            contains the sentiment analysis model.

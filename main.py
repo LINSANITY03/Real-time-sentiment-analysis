@@ -21,7 +21,9 @@ import tensorflow_hub as hub
 import tensorflow as tf
 import tensorflow_text as text  # pylint: disable=unused-import
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from slowapi.errors import RateLimitExceeded
+from fastapi.responses import JSONResponse
 
 from .routers import predict
 
@@ -42,6 +44,18 @@ async def lifespan(apps: FastAPI):
     apps.state.sentiment_analysis_model = ml_models
     yield
 
+# Initialize FastAPI
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(predict.router)
+
+# Add middleware for rate limiting
+@app.middleware("http")
+async def rate_limiter_middleware(request: Request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    except RateLimitExceeded as e:
+        return JSONResponse(
+            {"detail": "Rate limit exceeded"}, status_code=429
+        )
