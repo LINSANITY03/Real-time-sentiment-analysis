@@ -91,7 +91,7 @@ def prediction(dataset, sent_model, text_len):
     return predictions.item()
 
 @router.post("/", status_code=status.HTTP_200_OK, response_model=PredictResponse)
-@limiter.limit("2/hour")  # Limit to 2 requests per minute
+@limiter.limit("2/minute")  # Limit to 2 requests per minute
 async def predict_sentiment(request:Request, data: TextStr):
     """
     Predict the sentiment of the input text using a pre-loaded machine learning model.
